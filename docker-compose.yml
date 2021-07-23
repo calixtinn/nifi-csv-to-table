@@ -1,0 +1,38 @@
+version: '3'
+services: 
+    nifi:
+        image: apache/nifi:latest
+        environment: 
+            SINGLE_USER_CREDENTIALS_USERNAME: admin
+            SINGLE_USER_CREDENTIALS_PASSWORD: ctsBtRBKHRAx69EqUghvvgEvjnaLjFEB
+        volumes:
+            - ./files:/opt/nifi/nifi-current/files
+            - ./driver:/opt/nifi/nifi-current/driver
+        container_name: nifi 
+        ports: 
+            - 8443:8443
+        networks:
+            - nifi-poc-network
+        depends_on: 
+            - database
+    
+    database:
+        image: mariadb:latest
+        restart: unless-stopped
+        volumes:
+            - ./database:/var/lib/mysql
+        ports: 
+            - 3306:3306
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: nifi
+            MYSQL_PASSWORD: nifi
+            MYSQL_USER: nifi
+        networks:
+            - nifi-poc-network
+        container_name: db-nifi
+networks:
+    nifi-poc-network:
+        driver: bridge
+
+            
