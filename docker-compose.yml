@@ -5,6 +5,8 @@ services:
         environment: 
             SINGLE_USER_CREDENTIALS_USERNAME: admin
             SINGLE_USER_CREDENTIALS_PASSWORD: ctsBtRBKHRAx69EqUghvvgEvjnaLjFEB
+            NIFI_JVM_HEAP_INIT: 512m
+            NIFI_JVM_HEAP_MAX: 3g
         volumes:
             - ./files:/opt/nifi/nifi-current/files
             - ./driver:/opt/nifi/nifi-current/driver
